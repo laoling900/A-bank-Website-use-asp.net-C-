@@ -1,0 +1,59 @@
+﻿@using System.Globalization;
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<Transaction>
+@{
+    ViewData["Title"] = "View Statement";
+    var account = (Account)ViewBag.Account;
+}
+
+<div>
+    <h1 class="display-4">Account Number : @account.AccountNumber</h1>
+
+    <h3>Your Transaction details: </h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x =>x[0].TransactionID)</th>
+            <th>@Html.DisplayNameFor(x => x[0].TransactionType)</th>
+            <th>@Html.DisplayNameFor(x => x[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x[0].DestinaAccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x => x[0].Comment)</th>
+            <th>@Html.DisplayNameFor(x => x[0].TransactionTimeUtc)</th>
+            <th></th>
+        </tr>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => transaction.TransactionID)</td>
+                <td>@Html.DisplayFor(x =>  transaction.TransactionType)</td>
+                <td>@Html.DisplayFor(x =>  transaction.AccountNumber)</td>
+                @if (transaction.DestinaAccountNumber.Equals(null))
+                {
+                    <td>N/A</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(x =>  transaction.DestinaAccountNumber)</td>
+                }
+                <td>@Html.DisplayFor(x =>  transaction.Amount)</td>
+                <td>@Html.DisplayFor(x =>  transaction.Comment)</td>
+                @{
+                    string parameterValue = transaction.TransactionTimeUtc.ToLocalTime().ToString("dd/MM/yyyy h:mm tt", new CultureInfo("en-AU"));
+                }
+                <td>@Html.DisplayFor(x=>parameterValue)</td>
+                <td>
+                </td>
+            </tr>
+        }
+    </table>
+    <a asp-action="Statement">Back to Accounts</a>
+    @Html.PagedListPager(Model, page => Url.Action("ViewStatement", new { page }),
+    new PagedListRenderOptions {
+    LiElementClasses = new[] { "page-item" },
+    PageClasses = new[] { "page-link" }
+    })
+
+</div>
+

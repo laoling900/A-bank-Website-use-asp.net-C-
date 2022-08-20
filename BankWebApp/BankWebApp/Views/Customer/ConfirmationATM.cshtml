@@ -1,0 +1,45 @@
+﻿@model List<Transaction>
+@{
+    ViewData["Title"] = "ConfirmationATM";
+}
+
+
+<div>
+    <h1 class="text-danger">Your operation successful ! </h1>
+    <h2 class="text-danger">Information as showing below</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x =>Model[0].TransactionID)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].TransactionType)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].DestinaAccountNumber)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].Comment)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].TransactionTimeUtc)</th>
+            <th></th>
+        </tr>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x =>transaction.TransactionID)</td>
+                <td>@Html.DisplayFor(x =>transaction.TransactionType)</td>
+                <td>@Html.DisplayFor(x =>transaction.AccountNumber)</td>
+                <td>@Html.DisplayFor(x =>transaction.DestinaAccountNumber)</td>
+                <td>@Html.DisplayFor(x =>transaction.Amount)</td>
+                <td>@Html.DisplayFor(x =>transaction.Comment)</td>
+                <td>@Html.DisplayFor(x =>transaction.TransactionTimeUtc)</td>
+            </tr>
+        }
+    </table>
+
+    <a asp-action="Index">Back to Accounts</a>
+
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+ }
+}

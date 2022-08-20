@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AccountDto>
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div>
+    <h1 class="display-4">Account List</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.AccountNumber)</th>
+            <th>@Html.DisplayNameFor(model=>model.AccountType)</th>
+            <th>@Html.DisplayNameFor(model=>model.Balance)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var item in Model){
+              <tr>
+                <td>@Html.DisplayFor(modelItem=>item.AccountNumber)</td>
+                <td>@Html.DisplayFor(modelItem=>item.AccountType)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Balance)</td>
+               
+
+                <td>
+                    <div><a asp-controller="Transactions" asp-action="Index" asp-route-id="@item.AccountNumber">View Transaction</a> </div>
+                   
+                </td>
+            </tr>
+             }   
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-controller="Customer" asp-action="Index">Back to Customers</a>
+</div>
+

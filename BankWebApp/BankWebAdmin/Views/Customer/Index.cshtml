@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CustomerDto>
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <h1 class="display-4">Customer List</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.CustomerID)</th>
+            <th>@Html.DisplayNameFor(model=>model.Name)</th>
+            <th>@Html.DisplayNameFor(model=>model.TFN)</th>
+            <th>@Html.DisplayNameFor(model=>model.Address)</th>
+            <th>@Html.DisplayNameFor(model=>model.Suburb)</th>
+            <th>@Html.DisplayNameFor(model=>model.State)</th>
+            <th>@Html.DisplayNameFor(model=>model.Postcode)</th>
+            <th>@Html.DisplayNameFor(model=>model.Mobile)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var item in Model){
+              <tr>
+                <td>@Html.DisplayFor(modelItem=>item.CustomerID)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Name)</td>
+                <td>@Html.DisplayFor(modelItem=>item.TFN)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Address)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Suburb)</td>
+                <td>@Html.DisplayFor(modelItem=>item.State)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Postcode)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Mobile)</td>
+                <td>
+                    <div><a asp-action="Edit" asp-route-id="@item.CustomerID">Modify</a> </div>
+                    <div><a asp-action="Accounts" asp-route-id="@item.CustomerID">View Accounts</a></div> 
+                    @if(item.Login.LoginState==null){
+                            <div><a asp-action="Lock" asp-route-id="@item.Login.LoginID">Lock</a></div> 
+                        }
+                        else
+                        {
+                            <div><a asp-action="Unlock" asp-route-id="@item.Login.LoginID">Unlock</a></div> 
+                        }
+                </td>
+            </tr>
+             }   
+        </tbody>
+    </table>
+</div>

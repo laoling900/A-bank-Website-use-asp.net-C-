@@ -1,0 +1,43 @@
+﻿@model BillPay
+@{
+    ViewData["Title"] = "ConfirmationATM";
+}
+
+
+<div>
+    <h1 class="text-danger">Your operation successful ! </h1>
+    <h2 class="text-danger">Information as showing below</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x =>Model.BillPayId)</th>
+            <th>@Html.DisplayNameFor(x =>Model.AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x =>Model.PayeeID)</th>
+            <th>@Html.DisplayNameFor(x =>Model.Amount)</th>
+            <th>@Html.DisplayNameFor(x =>Model.ScheduleTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x =>Model.BillPayPeriod)</th>
+            <th>@Html.DisplayNameFor(x =>Model.BillPayType)</th>
+            <th></th>
+        </tr>
+            <tr>
+                <td>@Html.DisplayFor(x =>Model.BillPayId)</td>
+                <td>@Html.DisplayFor(x =>Model.AccountNumber)</td>
+                <td>@Html.DisplayFor(x =>Model.PayeeID)</td>
+                <td>@Html.DisplayFor(x =>Model.Amount)</td>
+                <td>@Html.DisplayFor(x =>Model.ScheduleTimeUtc)</td>
+                <td>@Html.DisplayFor(x =>Model.BillPayPeriod)</td>
+                <td>@Html.DisplayFor(x =>Model.BillPayType)</td>
+            </tr>
+        
+    </table>
+
+    <a asp-action="Index">Back to Bill Pays</a>
+
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+ }
+}

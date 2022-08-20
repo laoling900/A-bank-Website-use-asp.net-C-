@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BillPayDto>
+@using System.Globalization;
+@{
+    ViewData["Title"] = "BillPays";
+}
+<div>
+    <h1 class="display-4">BillPayList</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model=>model.BillPayId)</th>
+                <th>@Html.DisplayNameFor(model=>model.AccountNumber)</th>
+                <th>@Html.DisplayNameFor(model=>model.PayeeID)</th>
+                <th>@Html.DisplayNameFor(model=>model.Amount)</th>
+                <th>@Html.DisplayNameFor(model=>model.ScheduleTimeUtc)</th>
+                <th>@Html.DisplayNameFor(model=>model.BillPayPeriod)</th>
+                <th>@Html.DisplayNameFor(model=>model.BillPayType)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem=>item.BillPayId)</td>
+                    <td>@Html.DisplayFor(modelItem=>item.AccountNumber)</td>
+                    <td>@Html.DisplayFor(modelItem=>item.PayeeID)</td>
+                    <td>@Html.DisplayFor(modelItem=>item.Amount)</td>
+                    @{
+                        string parameterValue = item.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy h:mm tt", new CultureInfo("en-AU"));
+                    }
+                    <td>@Html.DisplayFor(modelItem=>parameterValue )</td>
+                    @if (item.BillPayPeriod == "M")
+                    {
+                        <td>Monthly</td>
+                    }
+                    else
+                    {
+                        <td>Once</td>
+                    }
+                    <td>@Html.DisplayFor(modelItem=>item.BillPayType)</td>
+                    <td>
+                        @if (item.LockState == null)
+                        {
+                            <div><a asp-action="LockBillPay" asp-route-id="@item.BillPayId">Lock</a></div>
+                        }
+                        else
+                        {
+                            <div><a asp-action="UnlockBillPay" asp-route-id="@item.BillPayId">Unlock</a></div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

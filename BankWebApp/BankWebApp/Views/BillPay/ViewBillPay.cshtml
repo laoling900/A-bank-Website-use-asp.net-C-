@@ -1,0 +1,82 @@
+﻿@using System.Globalization;
+@model List<BillPay>
+@{
+    ViewData["Title"] = "View Bill pay";
+}
+
+
+
+@if (Model.Any())
+{
+    <div>
+        <h1 class="display-4">Account Number @Model[0].AccountNumber</h1>
+
+        <h3>Your Bill pays</h3>
+    </div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x =>Model[0].BillPayId)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].Payee.Name)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].ScheduleTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].BillPayPeriod)</th>
+            <th>@Html.DisplayNameFor(x =>Model[0].BillPayType)</th>
+            <th></th>
+        </tr>
+        @foreach (var billPay in Model)
+        {
+            if (billPay.BillPayType != BillPayType.Delete)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x =>billPay.BillPayId)</td>
+                    <td>@Html.DisplayFor(x =>billPay.AccountNumber)</td>
+                    <td>@Html.DisplayFor(x =>billPay.Payee.Name)</td>
+                    <td>@Html.DisplayFor(x =>billPay.Amount)</td>
+                    @{
+                        string parameterValue = billPay.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy h:mm tt", new CultureInfo("en-AU"));
+                    }
+                    <td>@Html.DisplayFor(x =>parameterValue)</td>
+                    @if (billPay.BillPayPeriod == "M")
+                    {
+                        <td>Monthly</td>
+                    }
+                    else
+                    {
+                        <td>Once</td>
+                    }
+                    <td>@Html.DisplayFor(x =>billPay.BillPayType)</td>
+                    <td>
+                        @if (billPay.LockState == null)
+                        {
+                            <div><a asp-action="ModifyBillPay" asp-route-id="@billPay.BillPayId">Modify</a></div>
+                        }
+                        else
+                        {
+                            <div>Locked</div>
+                        }
+                        <div><a asp-action="DeleteBillPay" asp-route-id="@billPay.BillPayId">Delete</a></div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}
+else
+{
+    <h3>This account has no  bill pay yet ! </h3>
+}
+
+
+
+
+
+<div>
+    <a asp-action="Index">Back to Bill pays</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+ }
+}
